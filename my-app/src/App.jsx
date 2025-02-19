@@ -93,74 +93,136 @@ function Bai02() {
   );
 }
 
-
-
-function Calculator() {
+function Bai03() {
   const [num1, setNum1] = useState('');
   const [num2, setNum2] = useState('');
+  const [operation, setOperation] = useState('+');
   const [result, setResult] = useState(null);
 
-  const handleCalculate = (operator) => {
-    const number1 = parseFloat(num1);
-    const number2 = parseFloat(num2);
+  function handleChangeNum1(e) {
+    setNum1(e.target.value);
+  }
 
-    if (isNaN(number1) || isNaN(number2)) {
-      alert('Vui lòng nhập số hợp lệ');
+  function handleChangeNum2(e) {
+    setNum2(e.target.value);
+  }
+
+  function handleChangeOperation(e) {
+    setOperation(e.target.value);
+  }
+
+  function handleCalculate() {
+    const n1 = parseFloat(num1);
+    const n2 = parseFloat(num2);
+
+    if (isNaN(n1) || isNaN(n2)) {
+      setResult('Invalid input');
       return;
     }
 
-    let calculation;
-    switch (operator) {
+    let res;
+    switch (operation) {
       case '+':
-        calculation = number1 + number2;
+        res = n1 + n2;
         break;
       case '-':
-        calculation = number1 - number2;
+        res = n1 - n2;
         break;
       case '*':
-        calculation = number1 * number2;
+        res = n1 * n2;
         break;
       case '/':
-        if (number2 === 0) {
-          alert('Không thể chia cho 0');
-          return;
-        }
-        calculation = number1 / number2;
+        res = n2 !== 0 ? n1 / n2 : 'Không thể chia cho 0';
         break;
       default:
-        return;
+        res = 'Phép toán không hợp lệ';
     }
-
-    setResult(calculation);
-  };
+    setResult(res);
+  }
 
   return (
-    <div className="p-4 space-y-4 bg-gray-100 rounded-lg shadow-md max-w-sm mx-auto mt-10">
-      <h2 className="text-xl font-bold">Calculator</h2>
-      <input
-        type="text"
-        value={num1}
-        onChange={(e) => setNum1(e.target.value)}
-        placeholder="Nhập số thứ nhất"
-        className="w-full p-2 border rounded"
-      />
-      <input
-        type="text"
-        value={num2}
-        onChange={(e) => setNum2(e.target.value)}
-        placeholder="Nhập số thứ hai"
-        className="w-full p-2 border rounded"
-      />
-      <div className="flex space-x-2">
-        <button onClick={() => handleCalculate('+')} className="p-2 bg-blue-500 text-white rounded">+</button>
-        <button onClick={() => handleCalculate('-')} className="p-2 bg-blue-500 text-white rounded">-</button>
-        <button onClick={() => handleCalculate('*')} className="p-2 bg-blue-500 text-white rounded">*</button>
-        <button onClick={() => handleCalculate('/')} className="p-2 bg-blue-500 text-white rounded">/</button>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-100 to-green-300">
+      <div className="bg-white p-8 rounded-2xl shadow-2xl text-center w-96">
+        <h1 className="text-3xl font-extrabold mb-6 text-gray-800">Bài 03 - Phép Tính</h1>
+        <div className="space-y-4">
+          <input
+            type="text"
+            value={num1}
+            onChange={handleChangeNum1}
+            placeholder="Nhập số thứ nhất"
+            className="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-400"
+          />
+          <input
+            type="text"
+            value={num2}
+            onChange={handleChangeNum2}
+            placeholder="Nhập số thứ hai"
+            className="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-400"
+          />
+
+          <div className="flex justify-center gap-4">
+            <label className="flex items-center space-x-1">
+              <input
+                type="radio"
+                value="+"
+                checked={operation === '+'}
+                onChange={handleChangeOperation}
+              />
+              <span>Cộng</span>
+            </label>
+
+            <label className="flex items-center space-x-1">
+              <input
+                type="radio"
+                value="-"
+                checked={operation === '-'}
+                onChange={handleChangeOperation}
+              />
+              <span>Trừ</span>
+            </label>
+
+            <label className="flex items-center space-x-1">
+              <input
+                type="radio"
+                value="*"
+                checked={operation === '*'}
+                onChange={handleChangeOperation}
+              />
+              <span>Nhân</span>
+            </label>
+
+            <label className="flex items-center space-x-1">
+              <input
+                type="radio"
+                value="/"
+                checked={operation === '/'}
+                onChange={handleChangeOperation}
+              />
+              <span>Chia</span>
+            </label>
+          </div>
+
+          <button
+            onClick={handleCalculate}
+            className="bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg text-lg font-semibold transition duration-300 w-full"
+          >
+            Tính Toán
+          </button>
+
+          {result !== null && (
+            <p className="mt-4 text-xl font-semibold text-blue-700">
+              Kết quả: {result}
+            </p>
+          )}
+        </div>
       </div>
-      {result !== null && <div className="text-lg font-semibold">Kết quả: {result}</div>}
     </div>
   );
 }
+
+
+
+
 
 function TodoItem({ item, onRemove }) {
   return (
@@ -216,14 +278,62 @@ function TodoApp() {
     </div>
   );
 }
+function TabButton() {
+  const obj = {
+    JSX: "JSX là một phần mở rộng của ngôn ngữ JavaScript, nó cho phép chúng ta viết HTML trong JavaScript.",
+    Props: "Props là một đối tượng chứa các thuộc tính của một component, props giúp chúng ta truyền dữ liệu từ cha component sang con component.",
+    State: "State là một đối tượng chứa các thuộc tính của một component, khi state thay đổi, component sẽ render lại."
+  };
+
+  const [content, setContent] = useState('');
+
+  function handleClick(key) {
+    setContent(obj[key]);
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="flex justify-center gap-x-4 mb-4">
+        <button
+          onClick={() => handleClick('JSX')}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+        >
+          JSX
+        </button>
+
+        <button
+          onClick={() => handleClick('Props')}
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
+        >
+          Props
+        </button>
+
+        <button
+          onClick={() => handleClick('State')}
+          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+        >
+          State
+        </button>
+      </div>
+
+      {content && (
+        <div className="bg-white p-4 rounded-lg shadow-md border border-gray-300 w-96 text-center">
+          <p className="text-gray-700">{content}</p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function App() {
   return (
     <div>
-      <Calculator />
+      
       <TodoApp />
       <Bai01 />
       <Bai02 />
+      <Bai03 />
+      <TabButton />
     </div>
   );
 }
