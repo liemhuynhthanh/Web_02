@@ -16,29 +16,81 @@ function Bai01() {
   }
 
   return (
-    <div>
-      <h1>Bai 01</h1>
-      <input
-        type="text"
-        value={name}
-        onChange={handleChange}
-        placeholder="Enter your name"
-        className="border p-2 rounded-lg"
-      />
-      <br />
-      <button
-        onClick={handleClick}
-        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg"
-      >
-        Submit
-      </button>
-      {text && <p className="mt-2">{text}</p>}
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-xl shadow-lg text-center">
+        <h1 className="text-2xl font-bold mb-4">Bai 01</h1>
+        <input
+          type="text"
+          value={name}
+          onChange={handleChange}
+          placeholder="Enter your name"
+          className="border border-gray-300 p-3 rounded-lg w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <button
+          onClick={handleClick}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300 "
+        >
+          Submit
+        </button>
+        {text && <p className="mt-4 text-lg font-medium text-gray-700">{text}</p>}
+      </div>
     </div>
   );
 }
 
-function Bai02() {
-  
+
+function Bai02() { 
+  const [num1, setNum1] = useState('');
+  const [num2, setNum2] = useState('');
+  const [result, setResult] = useState(null);
+
+  function handleChange1(e) {
+    setNum1(e.target.value);
+  }
+
+  function handleChange2(e) {
+    setNum2(e.target.value);
+  }
+
+  function handleClick() {
+    const sum = parseFloat(num1) + parseFloat(num2);
+    setResult(isNaN(sum) ? 'Invalid input' : sum);
+  }
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300">
+      <div className="bg-white p-8 rounded-2xl shadow-2xl text-center w-96">
+        <h1 className="text-3xl font-extrabold mb-6 text-gray-800">Bài 02</h1>
+        <div className="flex flex-col space-y-4">
+          <input
+            type="text"
+            value={num1}
+            onChange={handleChange1}
+            placeholder="Nhập số thứ nhất"
+            className="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <input
+            type="text"
+            value={num2}
+            onChange={handleChange2}
+            placeholder="Nhập số thứ hai"
+            className="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <button
+            onClick={handleClick}
+            className="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold transition duration-300"
+          >
+            Tính Tổng
+          </button>
+          {result !== null && (
+            <p className="mt-4 text-xl font-semibold text-green-700">
+              Kết quả: {result}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 
@@ -171,6 +223,7 @@ export default function App() {
       <Calculator />
       <TodoApp />
       <Bai01 />
+      <Bai02 />
     </div>
   );
 }
